@@ -1,0 +1,67 @@
+{
+    "tokens": [
+        "__settings__.logging.loglevel", 
+        "__settings__.additional_parameters.api_token", 
+        "token_", 
+        "server", 
+        "port"
+    ], 
+    "requests": [
+        {
+            "pre_process": {
+                "skip_conditions": [], 
+                "pipeline": []
+            }, 
+            "request": {
+                "method": "GET", 
+                "url": "{{server}}:{{port}}/status/v1/services", 
+                "headers": {
+                    "X-Authentication": "{{token_}}"
+                }
+            }, 
+            "post_process": {
+                "skip_conditions": [
+                    {
+                        "method": "json_empty", 
+                        "input": [
+                            "{{__response__.body}}", 
+                            "$"
+                        ]
+                    }
+                ], 
+                "pipeline": [
+                    {
+                        "method": "splunk_xml", 
+                        "output": "__stdout__", 
+                        "input": [
+                            "{{__response__.body}}", 
+                            "", 
+                            "{{index}}", 
+                            "{{host}}", 
+                            "{{source}}", 
+                            "{{sourcetype}}"
+                        ]
+                    }, 
+                    {
+                        "method": "std_output", 
+                        "input": [
+                            "{{__stdout__}}"
+                        ]
+                    }
+                ]
+            }, 
+            "iteration_mode": {
+                "stop_conditions": [], 
+                "iteration_count": "1"
+            }
+        }
+    ], 
+    "global_settings": {
+        "logging": {
+            "level": "{{__settings__.logging.loglevel}}"
+        }
+    }, 
+    "meta": {
+        "apiVersion": "1.0.0"
+    }
+}
