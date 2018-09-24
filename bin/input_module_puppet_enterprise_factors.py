@@ -60,7 +60,7 @@ def collect_events(helper, ew):
     
     url = server + ":" + port + "/pdb/query/v4/inventory?query= [\"=\",\"environment\",\"" + type_of_environment + "\"]"
     
-    if pe_link:
+    if pe_server_url:
         input_source = pe_server_url
     else:
         input_source = pe_server_url
