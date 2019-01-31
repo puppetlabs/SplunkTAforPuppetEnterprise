@@ -15,4 +15,14 @@ $ tar --exclude=".git" --exclude="tmpdir" -czvf tmpdir/SplunkTAforPuppetEnterpri
 
 To add your finished work back to the repo:
 - Export the build from the Splunk Add-On tool
-- Move the 
+- Move the downloaded tar.gz to tmpdir
+- Expand the export the export in tmpdir
+- sync the local repo with the tmpdir contents
+- proceed with git commits as needed, etc
+
+```
+$ cd tmpdir
+$ tar xzvf SplunkTAforPuppetEnterprise_2_0_1_export.tgz
+$ cd ..
+$ rsync -vr tmp/SplunkTAforPuppetEnterprise_2_0_1_export/* ./
+```
