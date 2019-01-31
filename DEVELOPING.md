@@ -10,7 +10,7 @@ In order to load this module properly into the Splunk Add-On builder for develop
 
 ```
 $ git checkout -b 'my working branch'
-$ tar --exclude=".git" --exclude="tmpdir" -czvf tmpdir/SplunkTAforPuppetEnterprise.tar.gz ./*
+$ tar -C .. --exclude=".git" --exclude="tmpdir" -czvf tmpdir/SplunkTAforPuppetEnterprise.tar.gz SplunkTAforPuppetEnterprise
 ```
 
 To add your finished work back to the repo:
