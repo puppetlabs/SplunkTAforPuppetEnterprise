@@ -1,6 +1,7 @@
 # Splunk Add-on for Puppet Enterprise - Docs
 ----
 - Splunk Add-on Community Supported (Puppet & Splunk Customers)
+
 ### - Requirements to Run App
 - Splunk Enterprise 7.0+
 - Puppet Enterprise 2018.1.1+
