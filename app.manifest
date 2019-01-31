@@ -5,11 +5,11 @@
     "id": {
       "group": null,
       "name": "SplunkTAforPuppetEnterprise",
-      "version": "2.0"
+      "version": "2.0.1"
     },
     "author": [
       {
-        "name": "Splunk",
+        "name": "Puppet, Inc.",
         "email": null,
         "company": null
       }

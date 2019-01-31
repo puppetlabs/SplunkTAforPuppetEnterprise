@@ -1,840 +1,840 @@
 {
-    "meta": {
-        "displayName": "Splunk Add-on for Puppet Enterprise",
-        "restRoot": "SplunkTAforPuppetEnterprise",
-        "name": "SplunkTAforPuppetEnterprise",
-        "apiVersion": "3.0.0",
-        "version": "2.0"
-    },
-    "pages": {
-        "inputs": {
-            "services": [
-                {
-                    "title": "Puppet Enterprise Extended Details",
-                    "name": "puppet_enterprise_extended_details",
-                    "entity": [
-                        {
-                            "type": "text",
-                            "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
-                            "defaultValue": "pe_extended_details",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^[a-zA-Z]\\w*$",
-                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
-                                },
-                                {
-                                    "type": "string",
-                                    "maxLength": 100,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of input name should be between 1 and 100"
-                                }
-                            ],
-                            "field": "name",
-                            "label": "Name:",
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Puppet Enterprise server URL.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "server_",
-                            "label": "PE server URL:",
-                            "options": {
-                                "placeholder": "https://puppet"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "puppet_enterprise_server_",
-                            "label": "PE server FQDN:",
-                            "options": {
-                                "placeholder": "puppet.example.com"
-                            },
-                            "required": false
-                        },
-                        {
-                            "type": "text",
-                            "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
-                            "defaultValue": "8081",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "port_",
-                            "label": "PuppetDB port:",
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of token is 8192"
-                                }
-                            ],
-                            "encrypted": true,
-                            "label": "Authentication token:",
-                            "required": true,
-                            "field": "token_"
-                        },
-                        {
-                            "type": "text",
-                            "help": "Time interval for fetching data (in seconds).",
-                            "defaultValue": 60,
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ],
-                            "field": "interval",
-                            "label": "Interval:",
-                            "required": true
-                        },
-                        {
-                            "type": "singleSelect",
-                            "defaultValue": "default",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 80,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of index name should be between 1 and 80."
-                                }
-                            ],
-                            "field": "index",
-                            "label": "Splunk index:",
-                            "options": {
-                                "blackList": "^_.*$",
-                                "endpointUrl": "data/indexes",
-                                "createSearchChoice": true
-                            },
-                            "required": true
-                        }
-                    ]
-                },
-                {
-                    "title": "Puppet Enterprise Metrics",
-                    "name": "puppet_enterprise_metrics",
-                    "entity": [
-                        {
-                            "type": "text",
-                            "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
-                            "defaultValue": "pe_metrics",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^[a-zA-Z]\\w*$",
-                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
-                                },
-                                {
-                                    "type": "string",
-                                    "maxLength": 100,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of input name should be between 1 and 100"
-                                }
-                            ],
-                            "field": "name",
-                            "label": "Name:",
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Puppet Enterprise server URL.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "server_",
-                            "label": "PE server URL:",
-                            "options": {
-                                "placeholder": "https://puppet"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "puppet_enterprise_server_",
-                            "label": "PE server FQDN:",
-                            "options": {
-                                "placeholder": "puppet.example.com"
-                            },
-                            "required": false
-                        },
-                        {
-                            "type": "text",
-                            "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
-                            "defaultValue": "8081",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "port_",
-                            "label": "PuppetDB port:",
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of token is 8192"
-                                }
-                            ],
-                            "encrypted": true,
-                            "label": "Authentication token:",
-                            "required": true,
-                            "field": "token_"
-                        },
-                        {
-                            "type": "text",
-                            "help": "Time interval for fetching data (in seconds).",
-                            "defaultValue": 60,
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ],
-                            "field": "interval",
-                            "label": "Interval:",
-                            "required": true
-                        },
-                        {
-                            "type": "singleSelect",
-                            "defaultValue": "default",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 80,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of index name should be between 1 and 80."
-                                }
-                            ],
-                            "field": "index",
-                            "label": "Splunk index:",
-                            "options": {
-                                "blackList": "^_.*$",
-                                "endpointUrl": "data/indexes",
-                                "createSearchChoice": true
-                            },
-                            "required": true
-                        }
-                    ]
-                },
-                {
-                    "title": "Puppet Enterprise Overview Enforcement",
-                    "name": "puppet_enterprise_overview_enforcement",
-                    "entity": [
-                        {
-                            "type": "text",
-                            "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
-                            "defaultValue": "pe_overview_enforcement",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^[a-zA-Z]\\w*$",
-                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
-                                },
-                                {
-                                    "type": "string",
-                                    "maxLength": 100,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of input name should be between 1 and 100"
-                                }
-                            ],
-                            "field": "name",
-                            "label": "Name:",
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Puppet Enterprise server URL.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "server_",
-                            "label": "PE server URL:",
-                            "options": {
-                                "placeholder": "https://puppet"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "puppet_enterprise_server_",
-                            "label": "PE server FQDN:",
-                            "options": {
-                                "placeholder": "puppet.example.com"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
-                            "defaultValue": "8081",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "port_",
-                            "label": "PuppetDB port:",
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of password is 8192"
-                                }
-                            ],
-                            "encrypted": true,
-                            "label": "Authentication token:",
-                            "required": true,
-                            "field": "token_"
-                        },
-                        {
-                            "type": "text",
-                            "help": "Time interval for fetching data (in seconds).",
-                            "defaultValue": 60,
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ],
-                            "field": "interval",
-                            "label": "Interval:",
-                            "required": true
-                        },
-                        {
-                            "type": "singleSelect",
-                            "defaultValue": "default",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 80,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of index name should be between 1 and 80."
-                                }
-                            ],
-                            "field": "index",
-                            "label": "Splunk index:",
-                            "options": {
-                                "blackList": "^_.*$",
-                                "endpointUrl": "data/indexes",
-                                "createSearchChoice": true
-                            },
-                            "required": true
-                        }
-                    ]
-                },
-                {
-                    "title": "Puppet Enterprise Status Overview",
-                    "name": "puppet_enterprise_status_overview",
-                    "entity": [
-                        {
-                            "type": "text",
-                            "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
-                            "defaultValue": "pe_status_overview",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^[a-zA-Z]\\w*$",
-                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
-                                },
-                                {
-                                    "type": "string",
-                                    "maxLength": 100,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of input name should be between 1 and 100"
-                                }
-                            ],
-                            "field": "name",
-                            "label": "Name:",
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Puppet Enterprise server URL.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "server_",
-                            "label": "PE server URL:",
-                            "options": {
-                                "placeholder": "https://puppet"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "puppet_enterprise_server_",
-                            "label": "PE server FQDN:",
-                            "options": {
-                                "placeholder": "puppet.example.com"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
-                            "defaultValue": "8081",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "port_",
-                            "label": "PuppetDB port:",
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of password is 8192"
-                                }
-                            ],
-                            "encrypted": true,
-                            "label": "Authentication token:",
-                            "required": true,
-                            "field": "token_"
-                        },
-                        {
-                            "type": "text",
-                            "help": "Time interval for fetching data (in seconds).",
-                            "defaultValue": 60,
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ],
-                            "field": "interval",
-                            "label": "Interval:",
-                            "required": true
-                        },
-                        {
-                            "type": "singleSelect",
-                            "defaultValue": "default",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 80,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of index name should be between 1 and 80."
-                                }
-                            ],
-                            "field": "index",
-                            "label": "Splunk index:",
-                            "options": {
-                                "blackList": "^_.*$",
-                                "endpointUrl": "data/indexes",
-                                "createSearchChoice": true
-                            },
-                            "required": true
-                        }
-                    ]
-                },
-                {
-                    "title": "Puppet Enterprise Facts",
-                    "name": "puppet_enterprise_factors",
-                    "entity": [
-                        {
-                            "type": "text",
-                            "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
-                            "defaultValue": "pe_facts",
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^[a-zA-Z]\\w*$",
-                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
-                                },
-                                {
-                                    "type": "string",
-                                    "maxLength": 100,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of input name should be between 1 and 100"
-                                }
-                            ],
-                            "field": "name",
-                            "label": "Name:",
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Puppet Enterprise server URL.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "server_",
-                            "label": "PE server URL:",
-                            "options": {
-                                "placeholder": "https://puppet"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "puppet_enterprise_server_",
-                            "label": "PE server FQDN:",
-                            "options": {
-                                "placeholder": "puppet.example.com"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
-                            "defaultValue": "8081",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "port_",
-                            "label": "PuppetDB port:",
-                            "options": {
-                                "placeholder": "8081"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of password is 8192"
-                                }
-                            ],
-                            "encrypted": true,
-                            "label": "Authentication token:",
-                            "required": true,
-                            "field": "token_"
-                        },
-                        {
-                            "type": "text",
-                            "help": "Input the date when you generated your token (MM/DD/YYYY).",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "token_generation_date_",
-                            "label": "Token generation date:",
-                            "options": {
-                                "placeholder": "01/01/11"
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Time interval for fetching data (in seconds).",
-                            "defaultValue": 60,
-                            "validators": [
-                                {
-                                    "type": "regex",
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$",
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ],
-                            "field": "interval",
-                            "label": "Interval:",
-                            "required": true
-                        },
-                        {
-                            "type": "singleSelect",
-                            "defaultValue": "default",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 80,
-                                    "minLength": 1,
-                                    "errorMsg": "Length of index name should be between 1 and 80."
-                                }
-                            ],
-                            "field": "index",
-                            "label": "Splunk index:",
-                            "options": {
-                                "blackList": "^_.*$",
-                                "endpointUrl": "data/indexes",
-                                "createSearchChoice": true
-                            },
-                            "required": true
-                        },
-                        {
-                            "type": "text",
-                            "help": "Puppet environment you want to monitor.",
-                            "defaultValue": "production",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ],
-                            "field": "environment",
-                            "label": "Environment",
-                            "options": {
-                                "placeholder": "production"
-                            },
-                            "required": true
-                        }
-                    ]
-                }
-            ],
-            "title": "Data inputs",
-            "description": "Manage how to fetch data from Puppet Enterprise. Get help with this add-on at: https://github.com/puppetlabs/SplunkTAforPuppetEnterprise",
-            "table": {
-                "header": [
-                    {
-                        "field": "name",
-                        "label": "Name"
-                    },
-                    {
-                        "field": "interval",
-                        "label": "Interval"
-                    },
-                    {
-                        "field": "index",
-                        "label": "Index"
-                    },
-                    {
-                        "field": "disabled",
-                        "label": "Status"
-                    }
-                ],
-                "actions": [
-                    "edit",
-                    "enable",
-                    "delete",
-                    "clone"
-                ],
-                "moreInfo": [
-                    {
-                        "field": "name",
-                        "label": "Name"
-                    },
-                    {
-                        "field": "interval",
-                        "label": "Interval"
-                    },
-                    {
-                        "field": "index",
-                        "label": "Index"
-                    },
-                    {
-                        "field": "disabled",
-                        "label": "Status"
-                    },
-                    {
-                        "field": "token_",
-                        "label": "Token:"
-                    },
-                    {
-                        "field": "puppet_enterprise_server_",
-                        "label": "Puppet Enterprise Server:"
-                    },
-                    {
-                        "field": "server_",
-                        "label": "Server:"
-                    },
-                    {
-                        "field": "port_",
-                        "label": "Port:"
-                    },
-                    {
-                        "field": "token_generation_date_",
-                        "label": "Token Generation Date:"
-                    },
-                    {
-                        "field": "environment",
-                        "label": "Environment"
-                    }
-                ]
-            }
-        },
-        "configuration": {
-            "title": "Options",
-            "tabs": [
-                {
-                    "title": "Logging",
-                    "name": "logging",
-                    "entity": [
-                        {
-                            "type": "singleSelect",
-                            "options": {
-                                "disableSearch": true,
-                                "autoCompleteFields": [
-                                    {
-                                        "value": "DEBUG",
-                                        "label": "DEBUG"
-                                    },
-                                    {
-                                        "value": "INFO",
-                                        "label": "INFO"
-                                    },
-                                    {
-                                        "value": "WARNING",
-                                        "label": "WARNING"
-                                    },
-                                    {
-                                        "value": "ERROR",
-                                        "label": "ERROR"
-                                    },
-                                    {
-                                        "value": "CRITICAL",
-                                        "label": "CRITICAL"
-                                    }
-                                ]
-                            },
-                            "defaultValue": "INFO",
-                            "field": "loglevel",
-                            "label": "Log level"
-                        }
-                    ]
-                },
-                {
-                    "title": "Victor Ops integration",
-                    "name": "additional_parameters",
-                    "entity": [
-                        {
-                            "type": "text",
-                            "defaultValue": "",
-                            "validators": [
-                                {
-                                    "type": "string",
-                                    "maxLength": 8192,
-                                    "minLength": 0,
-                                    "errorMsg": "Max length of password is 8192"
-                                }
-                            ],
-                            "field": "victor_ops_token",
-                            "label": "Victor Ops token:",
-                            "required": true,
-                            "encrypted": true
-                        }
-                    ]
-                }
-            ],
-            "description": "Set up the Splunk Add-On for Puppet Enterprise"
-        }
-    }
+  "meta": {
+      "displayName": "Splunk Add-on for Puppet Enterprise",
+      "restRoot": "SplunkTAforPuppetEnterprise",
+      "name": "SplunkTAforPuppetEnterprise",
+      "apiVersion": "3.0.0",
+      "version": "2.0.1"
+  },
+  "pages": {
+      "inputs": {
+          "services": [
+              {
+                  "title": "Puppet Enterprise Extended Details",
+                  "name": "puppet_enterprise_extended_details",
+                  "entity": [
+                      {
+                          "type": "text",
+                          "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
+                          "defaultValue": "pe_extended_details",
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^[a-zA-Z]\\w*$",
+                                  "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                              },
+                              {
+                                  "type": "string",
+                                  "maxLength": 100,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of input name should be between 1 and 100"
+                              }
+                          ],
+                          "field": "name",
+                          "label": "Name:",
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Puppet Enterprise server URL.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "server_",
+                          "label": "PE server URL:",
+                          "options": {
+                              "placeholder": "https://puppet"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "puppet_enterprise_server_",
+                          "label": "PE server FQDN:",
+                          "options": {
+                              "placeholder": "puppet.example.com"
+                          },
+                          "required": false
+                      },
+                      {
+                          "type": "text",
+                          "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
+                          "defaultValue": "8081",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "port_",
+                          "label": "PuppetDB port:",
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of token is 8192"
+                              }
+                          ],
+                          "encrypted": true,
+                          "label": "Authentication token:",
+                          "required": true,
+                          "field": "token_"
+                      },
+                      {
+                          "type": "text",
+                          "help": "Time interval for fetching data (in seconds).",
+                          "defaultValue": 60,
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^\\-[1-9]\\d*$|^\\d*$",
+                                  "errorMsg": "Interval must be an integer."
+                              }
+                          ],
+                          "field": "interval",
+                          "label": "Interval:",
+                          "required": true
+                      },
+                      {
+                          "type": "singleSelect",
+                          "defaultValue": "default",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 80,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of index name should be between 1 and 80."
+                              }
+                          ],
+                          "field": "index",
+                          "label": "Splunk index:",
+                          "options": {
+                              "blackList": "^_.*$",
+                              "endpointUrl": "data/indexes",
+                              "createSearchChoice": true
+                          },
+                          "required": true
+                      }
+                  ]
+              },
+              {
+                  "title": "Puppet Enterprise Metrics",
+                  "name": "puppet_enterprise_metrics",
+                  "entity": [
+                      {
+                          "type": "text",
+                          "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
+                          "defaultValue": "pe_metrics",
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^[a-zA-Z]\\w*$",
+                                  "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                              },
+                              {
+                                  "type": "string",
+                                  "maxLength": 100,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of input name should be between 1 and 100"
+                              }
+                          ],
+                          "field": "name",
+                          "label": "Name:",
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Puppet Enterprise server URL.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "server_",
+                          "label": "PE server URL:",
+                          "options": {
+                              "placeholder": "https://puppet"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "puppet_enterprise_server_",
+                          "label": "PE server FQDN:",
+                          "options": {
+                              "placeholder": "puppet.example.com"
+                          },
+                          "required": false
+                      },
+                      {
+                          "type": "text",
+                          "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
+                          "defaultValue": "8081",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "port_",
+                          "label": "PuppetDB port:",
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of token is 8192"
+                              }
+                          ],
+                          "encrypted": true,
+                          "label": "Authentication token:",
+                          "required": true,
+                          "field": "token_"
+                      },
+                      {
+                          "type": "text",
+                          "help": "Time interval for fetching data (in seconds).",
+                          "defaultValue": 60,
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^\\-[1-9]\\d*$|^\\d*$",
+                                  "errorMsg": "Interval must be an integer."
+                              }
+                          ],
+                          "field": "interval",
+                          "label": "Interval:",
+                          "required": true
+                      },
+                      {
+                          "type": "singleSelect",
+                          "defaultValue": "default",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 80,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of index name should be between 1 and 80."
+                              }
+                          ],
+                          "field": "index",
+                          "label": "Splunk index:",
+                          "options": {
+                              "blackList": "^_.*$",
+                              "endpointUrl": "data/indexes",
+                              "createSearchChoice": true
+                          },
+                          "required": true
+                      }
+                  ]
+              },
+              {
+                  "title": "Puppet Enterprise Overview Enforcement",
+                  "name": "puppet_enterprise_overview_enforcement",
+                  "entity": [
+                      {
+                          "type": "text",
+                          "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
+                          "defaultValue": "pe_overview_enforcement",
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^[a-zA-Z]\\w*$",
+                                  "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                              },
+                              {
+                                  "type": "string",
+                                  "maxLength": 100,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of input name should be between 1 and 100"
+                              }
+                          ],
+                          "field": "name",
+                          "label": "Name:",
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Puppet Enterprise server URL.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "server_",
+                          "label": "PE server URL:",
+                          "options": {
+                              "placeholder": "https://puppet"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "puppet_enterprise_server_",
+                          "label": "PE server FQDN:",
+                          "options": {
+                              "placeholder": "puppet.example.com"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
+                          "defaultValue": "8081",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "port_",
+                          "label": "PuppetDB port:",
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of password is 8192"
+                              }
+                          ],
+                          "encrypted": true,
+                          "label": "Authentication token:",
+                          "required": true,
+                          "field": "token_"
+                      },
+                      {
+                          "type": "text",
+                          "help": "Time interval for fetching data (in seconds).",
+                          "defaultValue": 60,
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^\\-[1-9]\\d*$|^\\d*$",
+                                  "errorMsg": "Interval must be an integer."
+                              }
+                          ],
+                          "field": "interval",
+                          "label": "Interval:",
+                          "required": true
+                      },
+                      {
+                          "type": "singleSelect",
+                          "defaultValue": "default",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 80,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of index name should be between 1 and 80."
+                              }
+                          ],
+                          "field": "index",
+                          "label": "Splunk index:",
+                          "options": {
+                              "blackList": "^_.*$",
+                              "endpointUrl": "data/indexes",
+                              "createSearchChoice": true
+                          },
+                          "required": true
+                      }
+                  ]
+              },
+              {
+                  "title": "Puppet Enterprise Status Overview",
+                  "name": "puppet_enterprise_status_overview",
+                  "entity": [
+                      {
+                          "type": "text",
+                          "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
+                          "defaultValue": "pe_status_overview",
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^[a-zA-Z]\\w*$",
+                                  "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                              },
+                              {
+                                  "type": "string",
+                                  "maxLength": 100,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of input name should be between 1 and 100"
+                              }
+                          ],
+                          "field": "name",
+                          "label": "Name:",
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Puppet Enterprise server URL.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "server_",
+                          "label": "PE server URL:",
+                          "options": {
+                              "placeholder": "https://puppet"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "puppet_enterprise_server_",
+                          "label": "PE server FQDN:",
+                          "options": {
+                              "placeholder": "puppet.example.com"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
+                          "defaultValue": "8081",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "port_",
+                          "label": "PuppetDB port:",
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of password is 8192"
+                              }
+                          ],
+                          "encrypted": true,
+                          "label": "Authentication token:",
+                          "required": true,
+                          "field": "token_"
+                      },
+                      {
+                          "type": "text",
+                          "help": "Time interval for fetching data (in seconds).",
+                          "defaultValue": 60,
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^\\-[1-9]\\d*$|^\\d*$",
+                                  "errorMsg": "Interval must be an integer."
+                              }
+                          ],
+                          "field": "interval",
+                          "label": "Interval:",
+                          "required": true
+                      },
+                      {
+                          "type": "singleSelect",
+                          "defaultValue": "default",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 80,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of index name should be between 1 and 80."
+                              }
+                          ],
+                          "field": "index",
+                          "label": "Splunk index:",
+                          "options": {
+                              "blackList": "^_.*$",
+                              "endpointUrl": "data/indexes",
+                              "createSearchChoice": true
+                          },
+                          "required": true
+                      }
+                  ]
+              },
+              {
+                  "title": "Puppet Enterprise Facts",
+                  "name": "puppet_enterprise_factors",
+                  "entity": [
+                      {
+                          "type": "text",
+                          "help": "Enter a unique name for this data input (alphabetic letters, digits or underscores)",
+                          "defaultValue": "pe_facts",
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^[a-zA-Z]\\w*$",
+                                  "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
+                              },
+                              {
+                                  "type": "string",
+                                  "maxLength": 100,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of input name should be between 1 and 100"
+                              }
+                          ],
+                          "field": "name",
+                          "label": "Name:",
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Puppet Enterprise server URL.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "server_",
+                          "label": "PE server URL:",
+                          "options": {
+                              "placeholder": "https://puppet"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "FQDN of your Puppet Enterprise server, for dashboard links.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "puppet_enterprise_server_",
+                          "label": "PE server FQDN:",
+                          "options": {
+                              "placeholder": "puppet.example.com"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Port where PuppetDB can be contacted (HTTPS 8081, HTTP: 8080).",
+                          "defaultValue": "8081",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "port_",
+                          "label": "PuppetDB port:",
+                          "options": {
+                              "placeholder": "8081"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "See: https://puppet.com/docs/pe/latest/rbac_token_auth_intro.html#generate-a-token-using-the-api-endpoint for how to generate a token.",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of password is 8192"
+                              }
+                          ],
+                          "encrypted": true,
+                          "label": "Authentication token:",
+                          "required": true,
+                          "field": "token_"
+                      },
+                      {
+                          "type": "text",
+                          "help": "Input the date when you generated your token (MM/DD/YYYY).",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "token_generation_date_",
+                          "label": "Token generation date:",
+                          "options": {
+                              "placeholder": "01/01/11"
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Time interval for fetching data (in seconds).",
+                          "defaultValue": 60,
+                          "validators": [
+                              {
+                                  "type": "regex",
+                                  "pattern": "^\\-[1-9]\\d*$|^\\d*$",
+                                  "errorMsg": "Interval must be an integer."
+                              }
+                          ],
+                          "field": "interval",
+                          "label": "Interval:",
+                          "required": true
+                      },
+                      {
+                          "type": "singleSelect",
+                          "defaultValue": "default",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 80,
+                                  "minLength": 1,
+                                  "errorMsg": "Length of index name should be between 1 and 80."
+                              }
+                          ],
+                          "field": "index",
+                          "label": "Splunk index:",
+                          "options": {
+                              "blackList": "^_.*$",
+                              "endpointUrl": "data/indexes",
+                              "createSearchChoice": true
+                          },
+                          "required": true
+                      },
+                      {
+                          "type": "text",
+                          "help": "Puppet environment you want to monitor.",
+                          "defaultValue": "production",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of text input is 8192"
+                              }
+                          ],
+                          "field": "environment",
+                          "label": "Environment",
+                          "options": {
+                              "placeholder": "production"
+                          },
+                          "required": true
+                      }
+                  ]
+              }
+          ],
+          "title": "Data inputs",
+          "description": "Manage how to fetch data from Puppet Enterprise. Get help with this add-on at: https://github.com/puppetlabs/SplunkTAforPuppetEnterprise",
+          "table": {
+              "header": [
+                  {
+                      "field": "name",
+                      "label": "Name"
+                  },
+                  {
+                      "field": "interval",
+                      "label": "Interval"
+                  },
+                  {
+                      "field": "index",
+                      "label": "Index"
+                  },
+                  {
+                      "field": "disabled",
+                      "label": "Status"
+                  }
+              ],
+              "actions": [
+                  "edit",
+                  "enable",
+                  "delete",
+                  "clone"
+              ],
+              "moreInfo": [
+                  {
+                      "field": "name",
+                      "label": "Name"
+                  },
+                  {
+                      "field": "interval",
+                      "label": "Interval"
+                  },
+                  {
+                      "field": "index",
+                      "label": "Index"
+                  },
+                  {
+                      "field": "disabled",
+                      "label": "Status"
+                  },
+                  {
+                      "field": "token_",
+                      "label": "Token:"
+                  },
+                  {
+                      "field": "puppet_enterprise_server_",
+                      "label": "Puppet Enterprise Server:"
+                  },
+                  {
+                      "field": "server_",
+                      "label": "Server:"
+                  },
+                  {
+                      "field": "port_",
+                      "label": "Port:"
+                  },
+                  {
+                      "field": "token_generation_date_",
+                      "label": "Token Generation Date:"
+                  },
+                  {
+                      "field": "environment",
+                      "label": "Environment"
+                  }
+              ]
+          }
+      },
+      "configuration": {
+          "title": "Options",
+          "tabs": [
+              {
+                  "title": "Logging",
+                  "name": "logging",
+                  "entity": [
+                      {
+                          "type": "singleSelect",
+                          "options": {
+                              "disableSearch": true,
+                              "autoCompleteFields": [
+                                  {
+                                      "value": "DEBUG",
+                                      "label": "DEBUG"
+                                  },
+                                  {
+                                      "value": "INFO",
+                                      "label": "INFO"
+                                  },
+                                  {
+                                      "value": "WARNING",
+                                      "label": "WARNING"
+                                  },
+                                  {
+                                      "value": "ERROR",
+                                      "label": "ERROR"
+                                  },
+                                  {
+                                      "value": "CRITICAL",
+                                      "label": "CRITICAL"
+                                  }
+                              ]
+                          },
+                          "defaultValue": "INFO",
+                          "field": "loglevel",
+                          "label": "Log level"
+                      }
+                  ]
+              },
+              {
+                  "title": "Victor Ops integration",
+                  "name": "additional_parameters",
+                  "entity": [
+                      {
+                          "type": "text",
+                          "defaultValue": "",
+                          "validators": [
+                              {
+                                  "type": "string",
+                                  "maxLength": 8192,
+                                  "minLength": 0,
+                                  "errorMsg": "Max length of password is 8192"
+                              }
+                          ],
+                          "field": "victor_ops_token",
+                          "label": "Victor Ops token:",
+                          "required": true,
+                          "encrypted": true
+                      }
+                  ]
+              }
+          ],
+          "description": "Set up the Splunk Add-On for Puppet Enterprise"
+      }
+  }
 }
