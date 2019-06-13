@@ -1,3 +1,7 @@
+# DEPRECATED
+
+*** Please note this App has been deprecated in favour of the Splunk_hec module which can be found [here in Github](https://github.com/puppetlabs/puppetlabs-splunk_hec) and [here in the Forge](https://forge.puppet.com/puppetlabs/splunk_hec) ***
+
 # Splunk Add-on for Puppet Enterprise
 
 The Splunk Add-on for Puppet Enterprise collects machine data from using the PuppetDB API.
